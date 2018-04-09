@@ -72,6 +72,7 @@
 						ctx.lineTo(arrX[4] - rect.left, arrY[4] - rect.top);
 						ctx.closePath();
 						ctx.fill();
+                        newpolygon.geometry.coordinates = [];
                         for (j = 0; j < i; j++) {
                             newpolygon.geometry.coordinates.push([arrX[j], arrY[j]]);
                         }
