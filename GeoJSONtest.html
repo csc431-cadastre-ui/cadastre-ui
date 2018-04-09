@@ -77,6 +77,7 @@
                             newpolygon.geometry.coordinates.push([arrX[j], arrY[j]]);
                         }
                         document.getElementById("geoJSON").innerHTML = JSON.stringify(newpolygon, null, 2);
+                        document.getElementById("geoJSONlabel").innerHTML = "Coordinates stored in GeoJSON Object:";
                     }
 				}
 			}
@@ -87,6 +88,7 @@
     <canvas id="map" width=500px height=400px></canvas>
 		<div id="result"></div>
     <p></p>
+    <h4 id="geoJSONlabel"></h4>
 	<div id="geoJSON"></div>
 
 	</body>
