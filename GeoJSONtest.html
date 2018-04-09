@@ -4,13 +4,6 @@
 		<title>GeoJSON</title>
 		<script type="text/javascript">
 
-            //Function to set up a new CadastrePolygon as a string
-
-            function newPolygonJSON() {
-                return ""
-            }
-
-
 			//This is implemented with a modifiable max right now but ideally we could
 			//set it up so you just click a button when you're done and then we have it
 			//draw a polygon from all the points clicked.
@@ -23,7 +16,10 @@
 			var arrX = new Array(arrayMax);
 			var arrY = new Array(arrayMax);
 			var i = 0;
+            var j = 0;
 			var printArray = "Array Elements: ";
+
+            var newpolygon = {type:"Feature",geometry:{type:"Polygon",coordinates:[]},properties:{cadastreID:"",neighbors:{neighborID:"",sharedpoints:[]}}};
 
 			//onload makes this run when the page loads and then onclick is whenever
 			//you click on that page.
@@ -52,13 +48,20 @@
 
 						document.getElementById("result").innerHTML = printArray + "(" + arrX[i] + ", " + arrY[i] + ")";
 						printArray = printArray + "(" + arrX[i] + ", " + arrY[i] + "); ";
-						i++;
-					}
+                        i++;
+					} else {
+                        for (j = 0; j < i; j++) {
+                            newpolygon.geometry.coordinates.push([arrX[j], arrY[j]]);
+                        }
+                        document.getElementById("geoJSON").innerHTML = JSON.stringify(newpolygon, null, 2);
+                    }
 				}
 			}
 		</script>
 	</head>
 	<body>
-	<div id="result"></div>
+    <div id="result"></div>
+    <p></p>
+	<div id="geoJSON"></div>
 	</body>
 </html>
