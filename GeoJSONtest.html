@@ -9,6 +9,9 @@
 		</style>
 		<script type="text/javascript">
 
+            function newpolygonobj() {
+                return ({type:"Feature",geometry:{type:"Polygon",coordinates:[]},properties:{cadastreID:"",neighbors:{neighborID:"",sharedpoints:[]}}})
+            }
 			//This is implemented with a modifiable max right now but ideally we could
 			//set it up so you just click a button when you're done and then we have it
 			//draw a polygon from all the points clicked.
@@ -24,7 +27,7 @@
             var j = 0;
 			var printArray = "Array Elements: ";
 
-            var newpolygon = {type:"Feature",geometry:{type:"Polygon",coordinates:[]},properties:{cadastreID:"",neighbors:{neighborID:"",sharedpoints:[]}}};
+            var newpolygon = newpolygonobj();
 
 			//onload makes this run when the page loads and then onclick is whenever
 			//you click on that page.
