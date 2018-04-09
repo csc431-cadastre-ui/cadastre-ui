@@ -1,0 +1,37 @@
+{
+    "type": "Feature",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [100.0, 0.0],
+                [101.0, 0.0],
+                [101.0, 1.0],
+                [100.0, 1.0],
+                [100.0, 0.0]
+            ]
+        ]
+    },
+    "properties": {
+        "cadastreID": "93940283",
+        "neighbors": {
+            [{
+                "neighborID": "28082022",
+                "sharedpoints": [
+                    [101.0, 0.0],
+                    [101.0, 1.0]
+                ]
+            }, {
+                "neighborID": "85038402",
+                "sharedpoints": [
+                    [101.0, 1.0],
+                    [100.0, 1.0]
+                ]
+            }]
+        }
+    }
+}
+
+DO WE NEED TO TAKE INTO ACCOUNT THE ANTIMERIDIAN?
+SHOULD WE USE A BOUNDING BOX FOR ANYTHING?
+POLYGONS WITH HOLES?

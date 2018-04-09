@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>GeoJSON</title>
+		<script type="text/javascript">
+
+            //Function to set up a new CadastrePolygon as a string
+
+            function newPolygonJSON() {
+                return ""
+            }
+
+
+			//This is implemented with a modifiable max right now but ideally we could
+			//set it up so you just click a button when you're done and then we have it
+			//draw a polygon from all the points clicked.
+
+			var arrayMax = 5;
+
+			//the arr variables here are arrays that are meant to store the X and Y coords
+			//respectively for mouse clicks
+
+			var arrX = new Array(arrayMax);
+			var arrY = new Array(arrayMax);
+			var i = 0;
+			var printArray = "Array Elements: ";
+
+			//onload makes this run when the page loads and then onclick is whenever
+			//you click on that page.
+
+			window.onload = function()
+			{
+				window.onclick = function(pos)
+				{
+					//event is a reserved word so gotta use evt to represent the object holding
+					//the coordinates clicked among other things.  Also, the window.event part
+					//is what makes this work in Internet Explorer while the value passed on
+					//click is what makes it work in nongarbage browsers. (I might have reversed
+					//it but wtv)
+
+					var evt = window.event || pos;
+
+					//Below if statement basically just puts a cap on how many points this will take
+					//right now, but otherwise stores them and then prints them as proof that this
+					//code actually works and I didnt just scam you with something that compiles
+					//for some reason but does absolutely nothing
+
+					if(i < arrayMax)
+					{
+						arrX[i] = evt.clientX;
+						arrY[i] = evt.clientY;
+
+						document.getElementById("result").innerHTML = printArray + "(" + arrX[i] + ", " + arrY[i] + ")";
+						printArray = printArray + "(" + arrX[i] + ", " + arrY[i] + "); ";
+						i++;
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+	<div id="result"></div>
+	</body>
+</html>
