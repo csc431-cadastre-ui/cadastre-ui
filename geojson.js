@@ -37,7 +37,9 @@ window.onload = function()
   var rect = canvas.getBoundingClientRect();
 
   document.getElementById("createPolygon").addEventListener("click", function() {
-      completePolygon(newpolygon, ctx, rect);
+      if(canDraw) {
+        completePolygon(newpolygon, ctx, rect);
+      }
   }, false);
 
   window.onclick = function(pos)
