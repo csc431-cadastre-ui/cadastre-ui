@@ -3,14 +3,17 @@
 <head>
 	<title>GeoJSON</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
-
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 </head>
 <body>
-	<h4>Click 5 times to record points on the screen, then click a 6th time to display the geoJSON object holding your coordinates.</h4>
-	<canvas id="map" width=500px height=400px></canvas>
-	<div id="result"></div>
-	<p></p>
-	<div id="geoJSON"></div>
-	<script type="text/javascript" src="geojson.js"></script>
+	<div class="container text-center">	
+		<h4>Click in canvas to draw the path of your polygon, then click "Complete
+			Polygon" to connect the dots.</h4>
+		<canvas id="map" width=600px height=400px></canvas>
+		<div id="result"></div>
+		<button id="createPolygon">Complete Polygon</button>
+		<div id="geoJSON"></div>
+		<script type="text/javascript" src="geojson.js"></script>
+	</div>
 </body>
 </html>
