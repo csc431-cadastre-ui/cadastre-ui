@@ -8,24 +8,32 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     accessToken: 'your.mapbox.access.token'
 }).addTo(mymap);
 
+var marker = L.marker([51.5, -0.09]).addTo(mymap);
+
+
+
 var popup = L.popup();
-// for the polygon
+// for the polygon coordinates [lat, long]
 var coordinates = [];
-var canDraw = true;
 
 function onMapClick(e) {
     popup
         .setLatLng(e.latlng)
         .setContent("You clicked the map at " + e.latlng.toString())
         .openOn(mymap);
+    // circle scales with map. we don't want that.
+    var circle = L.circle([e.latlng.lat,e.latlng.lng], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 20
+    }).addTo(mymap);
     coordinates.push([e.latlng.lat,e.latlng.lng])
 }
 
 mymap.on('click', onMapClick);
 
 document.getElementById("createPolygon").addEventListener("click", function() {
-    if(canDraw) {
-      var polygon = L.polygon(coordinates).addTo(mymap);
-    }
-    canDraw = false;
+    var polygon = L.polygon(coordinates).addTo(mymap);
+    coordinates = [];
 }, false);
