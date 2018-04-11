@@ -25,7 +25,6 @@ function completePolygon(newpolygon, ctx, rect) {
   document.getElementById("geoJSON").innerHTML = JSON.stringify(newpolygon, null, 2);
   console.log(newpolygon)
   drawPolygon(newpolygon, ctx, rect);
-  canDraw = false;
 }
 
 window.onload = function()
@@ -40,6 +39,7 @@ window.onload = function()
       if(canDraw) {
         completePolygon(newpolygon, ctx, rect);
       }
+      canDraw = false;
   }, false);
 
   window.onclick = function(pos)
