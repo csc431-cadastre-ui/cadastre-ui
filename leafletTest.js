@@ -1,20 +1,17 @@
-console.log('working');
-var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+var mymap = L.map('mapid').setView([4.629159, -74.077034], 6);
 
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'your.mapbox.access.token'
 }).addTo(mymap);
 
 var marker = L.marker([51.5, -0.09]).addTo(mymap);
 
-
-
 var popup = L.popup();
 // for the polygon coordinates [lat, long]
 var coordinates = [];
+
+L.geoJSON(myObjects).addTo(mymap);
 
 function onMapClick(e) {
     popup
@@ -35,5 +32,6 @@ mymap.on('click', onMapClick);
 
 document.getElementById("createPolygon").addEventListener("click", function() {
     var polygon = L.polygon(coordinates).addTo(mymap);
+    console.log(JSON.stringify(polygon.toGeoJSON()));
     coordinates = [];
 }, false);
