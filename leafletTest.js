@@ -23,11 +23,8 @@ function onMapClick(e) {
         .setContent("You clicked the map at " + e.latlng.toString())
         .openOn(mymap);
     // circle scales with map. we don't want that.
-    var circle = L.circle([e.latlng.lat,e.latlng.lng], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 20
+    var circle = L.circleMarker([e.latlng.lat,e.latlng.lng], {
+        radius: 2
     }).addTo(mymap);
     // pushes this point to be added to the polygon
     coordinates.push([e.latlng.lat,e.latlng.lng])
