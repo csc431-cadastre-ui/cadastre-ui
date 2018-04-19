@@ -1,41 +1,21 @@
-// loads a Leaflet map and sets the center coordinate
-var mymap = L.map('mapid').setView([4.629159, -74.077034], 6);
+var mapboxUrl = 'https://api.mapbox.com/styles/v1/dmichaels19/cjg2p9i8604622spb0mwgn5x1/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZG1pY2hhZWxzMTkiLCJhIjoiY2pnMm91ZWx6MDAybDJxbzNkbHpvbHI4NSJ9.QMGAMC9IgPony0j7FwPrNA';
+// TODO edit attribution to mapbox
+var mapboxAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+var map = new L.Map('mapid', { center: new L.LatLng(4.63, -74.1), zoom: 13 });
+var mapbox = L.tileLayer(mapboxUrl, { maxZoom: 20, attribution: mapboxAttrib }).addTo(map);
+var drawnItems = L.featureGroup().addTo(map);
 
-// loads actual images of the world
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-}).addTo(mymap);
+map.addControl(new L.Control.Draw({
+    edit: {
+        featureGroup: drawnItems,
+        poly: { allowIntersection: false }
+    },
+    draw: {
+        polygon: { allowIntersection: false, showArea: true }
+    }
+}));
 
-var popup = L.popup();
-// for the polygon coordinates [lat, long]
-// append coordinate pairs to this, and when you click Complete Polygon, it
-// clears it and passes it to a geoJSON polygon
-var coordinates = [];
-
-// loads a geoJSON object array of preexisting polygons to display at start
-L.geoJSON(myObjects).addTo(mymap);
-
-//
-function onMapClick(e) {
-    popup
-        .setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(mymap);
-    // circle scales with map. we don't want that.
-    var circle = L.circleMarker([e.latlng.lat,e.latlng.lng], {
-        radius: 2
-    }).addTo(mymap);
-    // pushes this point to be added to the polygon
-    coordinates.push([e.latlng.lat,e.latlng.lng])
-}
-
-mymap.on('click', onMapClick);
-
-//
-document.getElementById("createPolygon").addEventListener("click", function() {
-  // TODO want to add to geoJSON layer, not polygon layer
-    var polygon = L.polygon(coordinates).addTo(mymap);
-    // console.log(JSON.stringify(polygon.toGeoJSON()));
-    coordinates = [];
-}, false);
+map.on(L.Draw.Event.CREATED, function (event) {
+    var layer = event.layer;
+    drawnItems.addLayer(layer);
+});
