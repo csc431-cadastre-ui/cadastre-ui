@@ -20,11 +20,11 @@ map.on(L.Draw.Event.CREATED, function (event) {
     drawnItems.addLayer(layer);
 });
 
-fetch("url", {
-  method: "GET"
-})
-.then(function(res){
-  return res.json()
-}).then(function(res){
-  L.geoJSON(res).addTo(map);
-})
+// fetch("url", {
+//   method: "GET"
+// })
+// .then(function(res){
+//   return res.json()
+// }).then(function(res){
+//   L.geoJSON(res).addTo(map);
+// })
