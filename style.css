@@ -3,5 +3,9 @@
 }
 
 #mapid {
-  height: 100vh;
+  height: 90vh;
+}
+
+.container {
+  margin-top: 5vh;
 }

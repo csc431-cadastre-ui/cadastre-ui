@@ -20,7 +20,9 @@ map.addControl(new L.Control.Draw({
         poly: { allowIntersection: false }
     },
     draw: {
-        polygon: { allowIntersection: false, showArea: true }
+        polygon: { allowIntersection: false, metric: true,
+                   shapeOptions: { color: '#ff0000'}
+                 }
     }
 }));
 

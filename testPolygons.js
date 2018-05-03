@@ -15,8 +15,14 @@ var testPolygons = [
         },
         "properties": {
             "cadastreID": "93940283",
+<<<<<<< HEAD
             "neighbors": []
 
+=======
+            "neighbors": [
+
+            ]
+>>>>>>> b1f8602c04b77914327cc55de2a79672992c3d3d
         }
     },
 
@@ -39,7 +45,13 @@ var testPolygons = [
         },
         "properties": {
             "cadastreID": "65849393",
+<<<<<<< HEAD
             "neighbors": []
+=======
+            "neighbors": [
+
+            ]
+>>>>>>> b1f8602c04b77914327cc55de2a79672992c3d3d
         }
     },
 
@@ -59,7 +71,13 @@ var testPolygons = [
         },
         "properties": {
             "cadastreID": "75937502",
+<<<<<<< HEAD
             "neighbors": []
+=======
+            "neighbors": [
+
+            ]
+>>>>>>> b1f8602c04b77914327cc55de2a79672992c3d3d
         }
     }
 ]
