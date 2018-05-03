@@ -15,9 +15,8 @@ var testPolygons = [
         },
         "properties": {
             "cadastreID": "93940283",
-            "neighbors": {
-                []
-            }
+            "neighbors": []
+
         }
     },
 
@@ -40,9 +39,7 @@ var testPolygons = [
         },
         "properties": {
             "cadastreID": "65849393",
-            "neighbors": {
-                []
-            }
+            "neighbors": []
         }
     },
 
@@ -62,9 +59,7 @@ var testPolygons = [
         },
         "properties": {
             "cadastreID": "75937502",
-            "neighbors": {
-                []
-            }
+            "neighbors": []
         }
     }
 ]
