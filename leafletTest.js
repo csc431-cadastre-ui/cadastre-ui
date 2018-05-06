@@ -12,7 +12,7 @@ var mapboxSatellite = L.tileLayer(mapboxSatelliteUrl, { maxZoom: 20, attribution
 var drawnItems = L.featureGroup().addTo(map);
 
 var word = L.geoJSON(testPolygons).addTo(map);
-console.log(word);
+// console.log(word);
 
 map.addControl(new L.Control.Draw({
     edit: {
@@ -20,6 +20,7 @@ map.addControl(new L.Control.Draw({
         poly: { allowIntersection: false }
     },
     draw: {
+      // polygon: { allowIntersection: false, showArea: true }
         polygon: { allowIntersection: false, metric: true,
                    shapeOptions: { color: '#ff0000'}
                  }
