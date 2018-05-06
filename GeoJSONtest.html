@@ -1,95 +1,20 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>GeoJSON</title>
-		<style>
-			#map {
-				border: 1px solid black;
-			}
-		</style>
-		<script type="text/javascript">
-
-            function newpolygonobj() {
-                return ({type:"Feature",geometry:{type:"Polygon",coordinates:[]},properties:{cadastreID:"",neighbors:{neighborID:"",sharedpoints:[]}}})
-            }
-			//This is implemented with a modifiable max right now but ideally we could
-			//set it up so you just click a button when you're done and then we have it
-			//draw a polygon from all the points clicked.
-
-			var arrayMax = 5;
-
-			//the arr variables here are arrays that are meant to store the X and Y coords
-			//respectively for mouse clicks
-
-			var arrX = new Array(arrayMax);
-			var arrY = new Array(arrayMax);
-			var i = 0;
-            var j = 0;
-			var printArray = "Array Elements: ";
-
-            var newpolygon = newpolygonobj();
-
-			//onload makes this run when the page loads and then onclick is whenever
-			//you click on that page.
-
-			window.onload = function()
-			{
-				window.onclick = function(pos)
-				{
-					//event is a reserved word so gotta use evt to represent the object holding
-					//the coordinates clicked among other things.  Also, the window.event part
-					//is what makes this work in Internet Explorer while the value passed on
-					//click is what makes it work in nongarbage browsers. (I might have reversed
-					//it but wtv)
-
-					var evt = window.event || pos;
-
-					//Below if statement basically just puts a cap on how many points this will take
-					//right now, but otherwise stores them and then prints them as proof that this
-					//code actually works and I didnt just scam you with something that compiles
-					//for some reason but does absolutely nothing
-					var ctx = document.getElementById('map').getContext('2d');
-					var rect = document.getElementById('map').getBoundingClientRect();
-
-					if(i < arrayMax)
-					{
-						arrX[i] = evt.clientX;
-						arrY[i] = evt.clientY;
-					  ctx.beginPath();
-					  ctx.arc(arrX[i] - rect.left, arrY[i] - rect.top, 1, 0, 2 * Math.PI, true);
-					  ctx.stroke();
-						document.getElementById("result").innerHTML = printArray + "(" + arrX[i] + ", " + arrY[i] + ")";
-						printArray = printArray + "(" + arrX[i] + ", " + arrY[i] + "); ";
-                        i++;
-					} else {
-
-						ctx.fillStyle = '#f00';
-						ctx.beginPath();
-						ctx.moveTo(arrX[0] - rect.left, arrY[0] - rect.top);
-						ctx.lineTo(arrX[1] - rect.left, arrY[1] - rect.top);
-						ctx.lineTo(arrX[2] - rect.left, arrY[2] - rect.top);
-						ctx.lineTo(arrX[3] - rect.left, arrY[3] - rect.top);
-						ctx.lineTo(arrX[4] - rect.left, arrY[4] - rect.top);
-						ctx.closePath();
-						ctx.fill();
-                        newpolygon.geometry.coordinates = [];
-                        for (j = 0; j < i; j++) {
-                            newpolygon.geometry.coordinates.push([arrX[j], arrY[j]]);
-                        }
-                        document.getElementById("geoJSON").innerHTML = JSON.stringify(newpolygon, null, 2);
-                        document.getElementById("geoJSONlabel").innerHTML = "Coordinates stored in GeoJSON Object:";
-                    }
-				}
-			}
-		</script>
-	</head>
-	<body>
-    <h4>Click 5 times to record points on the screen, then click a 6th time to display the geoJSON object holding your coordinates.</h4>
-    <canvas id="map" width=500px height=400px></canvas>
+<head>
+	<title>GeoJSON</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container text-center">
+		<h4>Click in canvas to draw the path of your polygon, then click "Complete
+			Polygon" to connect the dots.</h4>
+		<canvas id="map" width=600px height=400px></canvas>
 		<div id="result"></div>
-    <p></p>
-    <h4 id="geoJSONlabel"></h4>
-	<div id="geoJSON"></div>
+		<button id="createPolygon">Complete Polygon</button>
+		<div id="geoJSON"></div>
 
-	</body>
+	</div>
+	<script type="text/javascript" src="geojson.js"></script>
+</body>
 </html>
