@@ -12,7 +12,7 @@ var mapboxSatellite = L.tileLayer(mapboxSatelliteUrl, { maxZoom: 20, attribution
 var drawnItems = L.featureGroup().addTo(map);
 
 var word = L.geoJSON(testPolygons).addTo(map);
-// console.log(word);
+console.log(word);
 
 map.addControl(new L.Control.Draw({
     edit: {
@@ -29,6 +29,7 @@ map.addControl(new L.Control.Draw({
 
 map.on(L.Draw.Event.CREATED, function (event) {
     var layer = event.layer;
+    console.log(layer)
     console.log(layer.editing._poly.toGeoJSON());
     drawnItems.addLayer(layer);
     console.log(drawnItems);
