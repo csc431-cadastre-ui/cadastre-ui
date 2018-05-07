@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Turf Test</title>
+	</head>
+	<body>
+		<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+	<script>
+		myObjects = [
+			{"type":"Feature",
+				"properties":{},
+				"geometry":
+				{
+					"type":"Polygon",
+					"coordinates":[[
+						[-10, 8],
+						[-10, 10],
+						[0, 10],
+						[0, 8],
+						[-10, 8]
+					]]
+				}
+			},
+			{
+				"type":"Feature",
+				"properties":{},
+				"geometry":
+				{
+					"type":"Polygon",
+					"coordinates":[[
+						[-10, 8],
+						[-10, 10],
+						[0, 10],
+						[0, 8],
+						[-10, 8]
+					]]
+				}
+			},
+			{
+				"type":"Feature",
+				"properties":{},
+				"geometry":
+				{
+					"type":"Polygon",
+					"coordinates":[[
+						[-71.806641,0.660754],
+						[-73.564453,4.106469],
+						[-71.916504,3.470748],
+						[-69.411621,5.595006],
+						[-71.806641,0.660754]
+					]]
+				}
+			}
+			]
+
+		var poly1 = turf.polygon([[
+			[-122.8, 45.48],
+			[-122.8, 45.60],
+			[-122.58, 45.48],
+			[-122.8, 45.48]
+			]]);
+		var poly2 = turf.polygon([[
+			[-122.52, 45.53],
+			[-122.64, 45.55],
+			[-122.72, 45.52],
+			[-122.53, 45.40],
+			[-122.48, 45.47],
+			[-122.52, 45.53]
+			]]);
+
+		var intersection = turf.intersect(myObjects[0], myObjects[1]);
+		console.log(intersection);
+	</script>
+	</body>
+</html>
