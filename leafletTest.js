@@ -44,7 +44,11 @@ function finishPolygon(polygon) {
 function checkOverlap(polygon, existingPolygons) {
   var i;
   for (i = 0; i < existingPolygons.length; i++) {
-    if (turf.intersect(polygon, existingPolygons[i]) != null) {
+    var overlap = turf.intersect(polygon, existingPolygons[i])
+    if (overlap == null) {
+      continue;
+    } else if (overlap.geometry.type == "Polygon"
+        || overlap.geometry.type == "MultiPolygon") {
       return (true);
     }
   }
