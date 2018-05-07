@@ -66,13 +66,14 @@ function snapPoints(polygon, existingPolygons){
 	var i;
 	var j;
 	var k;
+  var snapped = false;
 	var snapRadius = 0.01
 	for (i = 0; i < existingPolygons.length; i++) {
 		for(j = 0; j < polygon.geometry.coordinates[0].length; j++){
 			for(k = 0; k < existingPolygons[i].geometry.coordinates[0].length; k++){
 				if(turf.distance(polygon.geometry.coordinates[0][j], existingPolygons[i].geometry.coordinates[0][k], {units: 'miles'}) < snapRadius){
+          snapped = true;
 					console.log(polygon.geometry.coordinates[0][j]);
-					window.alert("The point " + polygon.geometry.coordinates[0][j][0] + ", " + polygon.geometry.coordinates[0][j][1] + " was snapped to " + existingPolygons[i].geometry.coordinates[0][k][0] + ", " + existingPolygons[i].geometry.coordinates[0][k][1]);
 					polygon.geometry.coordinates[0][j] = existingPolygons[i].geometry.coordinates[0][k];
 					console.log(polygon.geometry.coordinates[0][j]);
 					console.log(existingPolygons[i].geometry.coordinates[0][k]);
@@ -80,8 +81,8 @@ function snapPoints(polygon, existingPolygons){
 			}
 		}
 	}
+  return (snapped);
 }
-
 
 map.on(L.Draw.Event.CREATED, function (event) {
     var layer = event.layer;
@@ -89,7 +90,7 @@ map.on(L.Draw.Event.CREATED, function (event) {
     //console.log(layer.editing._poly.toGeoJSON());
     newPolygon = finishPolygon(layer.editing._poly.toGeoJSON());
 
-    snapPoints(newPolygon, existingPolygons);
+    var snapped = snapPoints(newPolygon, existingPolygons);
 
     if (checkOverlap(newPolygon, existingPolygons)) {
       //ERROR MESSAGE
@@ -102,12 +103,16 @@ map.on(L.Draw.Event.CREATED, function (event) {
       */
       window.alert("You cannot overlap existing polygons.");
     } else {
+      if (snapped) {
+        console.log("HELLO");
+        layer = L.geoJSON(newPolygon);
+      }
       existingPolygons.push(newPolygon);
-      console.log(newPolygon);
+      //console.log(newPolygon);
       drawnPolygons.addLayer(layer);
     }
     //console.log(drawnItems);
-    //console.log(JSON.stringify(existingPolygons));
+    console.log(existingPolygons);
 });
 
 // fetch("url", {
