@@ -4,19 +4,37 @@ var mapboxSatelliteUrl = 'https://api.mapbox.com/styles/v1/mapbox/satellite-stre
 // attribution text
 var mapboxAttrib = '&copy <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>';
 // creating the actual leaflet map (with slippy functionality)
-var map = new L.Map('mapid', { center: new L.LatLng(4.63, -74.1), zoom: 13 });
+var map = new L.Map('mapid', { center: new L.LatLng(4.650814, -74.174559), zoom: 17 });
 // adding the mapbox tile data as a layer to the map
 // var mapbox = L.tileLayer(mapboxUrl, { maxZoom: 20, attribution: mapboxAttrib }).addTo(map);
 var mapboxSatellite = L.tileLayer(mapboxSatelliteUrl, { maxZoom: 20, attribution: mapboxAttrib }).addTo(map);
 // adding another layer for drawing polygons
-var drawnItems = L.featureGroup().addTo(map);
+//var drawnItems = L.featureGroup().addTo(map);
 
-var word = L.geoJSON(testPolygons).addTo(map);
-console.log(word);
+/*function loadJSON(callback) {
+  var xobj = new XMLHttpRequest();
+      xobj.overrideMimeType("application/json");
+  xobj.open('GET', 'existingPolygons.json', true); // Replace 'my_data' with the path to your file
+  xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+          // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+          callback(xobj.responseText);
+        }
+  };
+  xobj.send(null);
+}
+loadJSON(function(response) {
+  // Parse JSON string into object
+    var existingPolygons = JSON.parse(response);
+ });
+ */
+var existingPolygons = polygons;
+var drawnPolygons = L.geoJSON(existingPolygons).addTo(map);
+console.log(existingPolygons);
 
 map.addControl(new L.Control.Draw({
     edit: {
-        featureGroup: drawnItems,
+        featureGroup: drawnPolygons,
         poly: { allowIntersection: false }
     },
     draw: {
@@ -27,12 +45,35 @@ map.addControl(new L.Control.Draw({
     }
 }));
 
+function finishPolygon(polygon) {
+  polygon.type = "Feature";
+  var i;
+
+  for (i = 0; i < polygon.geometry.coordinates[0].length - 1; i++) {
+    if (polygon.geometry.coordinates[0][i][0] == polygon.geometry.coordinates[0][i+1][0]
+        && polygon.geometry.coordinates[0][i][1] == polygon.geometry.coordinates[0][i+1][1])
+          polygon.geometry.coordinates[0].splice(i+1, 1);
+  }
+  //Doesn't check for uniqueness
+  polygon.properties.cadastreID = (Math.floor(Math.random()*90000000) + 10000000).toString();
+  polygon.properties.neighbors = [];
+  return(polygon);
+}
+
 map.on(L.Draw.Event.CREATED, function (event) {
     var layer = event.layer;
-    console.log(layer)
-    console.log(layer.editing._poly.toGeoJSON());
-    drawnItems.addLayer(layer);
-    console.log(drawnItems);
+    //console.log(layer)
+    //console.log(layer.editing._poly.toGeoJSON());
+    newPolygon = layer.editing._poly.toGeoJSON();
+    /*if (overlapCheck(newPolygon)) {
+      //ERROR MESSAGE
+    } else {
+      existingPolygons.push(newPolygon);
+    }*/
+    existingPolygons.push(finishPolygon(newPolygon));
+    drawnPolygons.addLayer(layer);
+    //console.log(drawnItems);
+    console.log(JSON.stringify(existingPolygons));
 });
 
 // fetch("url", {
