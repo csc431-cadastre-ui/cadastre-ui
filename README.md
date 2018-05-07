@@ -2,6 +2,8 @@
 
 Welcome to the CSC431 Cadastre Project Homepage for Spring 2018. We are team !bad (pronounced "Not Bad") and we've been assigned as Team 4: Cadastre UI. With Cadastre Mapping, users can look at a composite drone photo of their neighborhood, draw a polygon that delineates their property lines, and store it as a uniquely identified digital property to speed up property title issuance.
 
+[Trello](https://trello.com/b/0oWpnMz2/cadastre-ui)
+[Final Presentation](https://docs.google.com/presentation/d/1iTGLh9ck60qkZrSxJ3XLLRnfewFXcUFpBR6rMWJ6-6g/edit?usp=sharing)
 
 ## Getting Started
 
