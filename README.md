@@ -38,7 +38,6 @@ You will need a modern web browser to view and manipulate our application.
 * **Halle Fields** - [Find me here!](https://github.com/hallekfields)
 * **Nathan Fox** - [Find me here!](https://github.com/nathancfox)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## Acknowledgments
 
