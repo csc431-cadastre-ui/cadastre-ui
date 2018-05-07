@@ -62,11 +62,35 @@ function checkOverlap(polygon, existingPolygons) {
   return (false);
 }
 
+function snapPoints(polygon, existingPolygons){
+	var i;
+	var j;
+	var k;
+	var snapRadius = 0.01
+	for (i = 0; i < existingPolygons.length; i++) {
+		for(j = 0; j < polygon.geometry.coordinates[0].length; j++){
+			for(k = 0; k < existingPolygons[i].geometry.coordinates[0].length; k++){
+				if(turf.distance(polygon.geometry.coordinates[0][j], existingPolygons[i].geometry.coordinates[0][k], {units: 'miles'}) < snapRadius){
+					console.log(polygon.geometry.coordinates[0][j]);
+					window.alert("The point " + polygon.geometry.coordinates[0][j][0] + ", " + polygon.geometry.coordinates[0][j][1] + " was snapped to " + existingPolygons[i].geometry.coordinates[0][k][0] + ", " + existingPolygons[i].geometry.coordinates[0][k][1]);
+					polygon.geometry.coordinates[0][j] = existingPolygons[i].geometry.coordinates[0][k];
+					console.log(polygon.geometry.coordinates[0][j]);
+					console.log(existingPolygons[i].geometry.coordinates[0][k]);
+				}
+			}
+		}
+	}
+}
+
+
 map.on(L.Draw.Event.CREATED, function (event) {
     var layer = event.layer;
     //console.log(layer)
     //console.log(layer.editing._poly.toGeoJSON());
     newPolygon = finishPolygon(layer.editing._poly.toGeoJSON());
+
+    snapPoints(newPolygon, existingPolygons);
+
     if (checkOverlap(newPolygon, existingPolygons)) {
       //ERROR MESSAGE
 	    /*console.log(newPolygon.geometry.coordinates[0]);
@@ -79,6 +103,7 @@ map.on(L.Draw.Event.CREATED, function (event) {
       window.alert("You cannot overlap existing polygons.");
     } else {
       existingPolygons.push(newPolygon);
+      console.log(newPolygon);
       drawnPolygons.addLayer(layer);
     }
     //console.log(drawnItems);
