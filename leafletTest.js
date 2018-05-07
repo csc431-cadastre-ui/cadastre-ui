@@ -9,25 +9,6 @@ var map = new L.Map('mapid', { center: new L.LatLng(4.650814, -74.174559), zoom:
 // var mapbox = L.tileLayer(mapboxUrl, { maxZoom: 20, attribution: mapboxAttrib }).addTo(map);
 var mapboxSatellite = L.tileLayer(mapboxSatelliteUrl, { maxZoom: 20, attribution: mapboxAttrib }).addTo(map);
 // adding another layer for drawing polygons
-//var drawnItems = L.featureGroup().addTo(map);
-
-/*function loadJSON(callback) {
-  var xobj = new XMLHttpRequest();
-      xobj.overrideMimeType("application/json");
-  xobj.open('GET', 'existingPolygons.json', true); // Replace 'my_data' with the path to your file
-  xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-          // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-          callback(xobj.responseText);
-        }
-  };
-  xobj.send(null);
-}
-loadJSON(function(response) {
-  // Parse JSON string into object
-    var existingPolygons = JSON.parse(response);
- });
- */
 var existingPolygons = polygons;
 var drawnPolygons = L.geoJSON(existingPolygons).addTo(map);
 console.log(existingPolygons);
@@ -54,26 +35,36 @@ function finishPolygon(polygon) {
         && polygon.geometry.coordinates[0][i][1] == polygon.geometry.coordinates[0][i+1][1])
           polygon.geometry.coordinates[0].splice(i+1, 1);
   }
-  //Doesn't check for uniqueness
+  //Doesn't check for uniqueness, odds of a repeat on an 8 digit number are essentially 0
   polygon.properties.cadastreID = (Math.floor(Math.random()*90000000) + 10000000).toString();
   polygon.properties.neighbors = [];
   return(polygon);
+}
+
+function checkOverlap(polygon, existingPolygons) {
+  var i;
+  for (i = 0; i < existingPolygons.length; i++) {
+    if (turf.intersect(polygon, existingPolygons[i]) != null) {
+      return (true);
+    }
+  }
+  return (false);
 }
 
 map.on(L.Draw.Event.CREATED, function (event) {
     var layer = event.layer;
     //console.log(layer)
     //console.log(layer.editing._poly.toGeoJSON());
-    newPolygon = layer.editing._poly.toGeoJSON();
-    /*if (overlapCheck(newPolygon)) {
+    newPolygon = finishPolygon(layer.editing._poly.toGeoJSON());
+    if (checkOverlap(newPolygon, existingPolygons)) {
       //ERROR MESSAGE
+      console.log('ERROR: OVERLAP DETECTED!!!!!!!!!!');
     } else {
       existingPolygons.push(newPolygon);
-    }*/
-    existingPolygons.push(finishPolygon(newPolygon));
-    drawnPolygons.addLayer(layer);
+      drawnPolygons.addLayer(layer);
+    }
     //console.log(drawnItems);
-    console.log(JSON.stringify(existingPolygons));
+    //console.log(JSON.stringify(existingPolygons));
 });
 
 // fetch("url", {
