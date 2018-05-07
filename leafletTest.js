@@ -101,6 +101,7 @@ map.on(L.Draw.Event.CREATED, function (event) {
       window.alert("You cannot overlap existing polygons.");
     } else {
       existingPolygons.push(newPolygon);
+      console.log(newPolygon);
       drawnPolygons.addLayer(layer);
     }
     //console.log(drawnItems);
