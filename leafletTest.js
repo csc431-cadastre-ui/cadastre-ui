@@ -58,12 +58,14 @@ map.on(L.Draw.Event.CREATED, function (event) {
     newPolygon = finishPolygon(layer.editing._poly.toGeoJSON());
     if (checkOverlap(newPolygon, existingPolygons)) {
       //ERROR MESSAGE
-	    console.log(newPolygon.geometry.coordinates[0]);
+	    /*console.log(newPolygon.geometry.coordinates[0]);
 	    console.log(newPolygon.geometry.coordinates[0][newPolygon.geometry.coordinates[0].length - 1]);
       L.marker(newPolygon.geometry.coordinates[0][newPolygon.geometry.coordinates[0].length - 1]).addTo(map)
 	    .bindPopup('This polygon overlaps with an existing one')
 	    .openPopup();
       console.log('ERROR: OVERLAP DETECTED!!!!!!!!!!');
+      */
+      window.alert("Error, please don't overlap existing polygons.");
     } else {
       existingPolygons.push(newPolygon);
       drawnPolygons.addLayer(layer);
