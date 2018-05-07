@@ -7,7 +7,7 @@ Welcome to the CSC431 Cadastre Project Homepage for Spring 2018. We are team !ba
 
 In order to run our project, you must first download the git repository to your local machine. For more information on how to clone a repository, follow this [link](https://help.github.com/articles/cloning-a-repository/).
 
-Once you have a local copy of our repository, running our project is easy! Open/run leafletTest.html 
+Once you have a local copy of our repository, running our project is easy! Run leafletTest.html 
 ```
 open leafletTest.html
 ```
@@ -41,7 +41,7 @@ You will need a modern web browser to view and manipulate our application.
 
 ## Acknowledgments
 
-* [Makina Corpus](https://github.com/makinacorpus/) - Creator of Leaflet.js
+* [Makina Corpus](https://github.com/makinacorpus/) - Creator of "Leaflet Snap" functionality
 * Our incredible teammates with extended web development experience - we couldn't have done this without your knowledge
 * Our professors, Julio Perez and Chris Mader
 * Our Project Sponsor, Tim Norris
