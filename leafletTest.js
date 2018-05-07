@@ -65,7 +65,7 @@ map.on(L.Draw.Event.CREATED, function (event) {
 	    .openPopup();
       console.log('ERROR: OVERLAP DETECTED!!!!!!!!!!');
       */
-      window.alert("Error, please don't overlap existing polygons.");
+      window.alert("You cannot overlap existing polygons.");
     } else {
       existingPolygons.push(newPolygon);
       drawnPolygons.addLayer(layer);
