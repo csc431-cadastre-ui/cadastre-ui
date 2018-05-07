@@ -50,7 +50,14 @@ function checkOverlap(polygon, existingPolygons) {
     } else if (overlap.geometry.type == "Polygon"
         || overlap.geometry.type == "MultiPolygon") {
       return (true);
-    }
+    } else if (overlap.geometry.type == "Point"
+               || overlap.geometry.type == "LineString"
+               || overlap.geometry.type == "MultiLineString") {
+        var neighbor = {neighborID: existingPolygons[i].properties.cadastreID,
+                        sharedpoints: overlap};
+        polygon.properties.neighbors.push(neighbor);
+        continue;
+      }
   }
   return (false);
 }
